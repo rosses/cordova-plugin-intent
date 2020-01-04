@@ -34,7 +34,6 @@ public class IntentPlugin extends CordovaPlugin {
     private final String pluginName = "IntentPlugin";
     private CallbackContext onNewIntentCallbackContext = null;
     private BroadcastReceiver mReceiver = null;
-    private Intent intentService = new Intent("cl.proindar.mobile.ACTION_DECODE_DATA");
     private String strBarcode = "";
     /**
      * Generic plugin command executor
@@ -60,9 +59,9 @@ public class IntentPlugin extends CordovaPlugin {
         }
         
         mReceiver = new BarcodeReceiverProindar(callbackContext);
-
-        cordova.getActivity().startService(intentService);
-        cordova.getActivity().registerReceiver(mReceiver); 
+        //cordova.getActivity().startService(intentService);
+        IntentFilter filter1 = new IntentFilter("cl.proindar.mobile.ACTION_DECODE_DATA");
+        cordova.getActivity().registerReceiver(mReceiver, filter1); 
 
         return true;
     }
@@ -263,23 +262,3 @@ public class IntentPlugin extends CordovaPlugin {
         }
     }
 }
-public class BarcodeReceiverProindar extends BroadcastReceiver {
-
-    private CallbackContext callbackContext;
-
-    public BarcodeReceiverProindar (CallbackContext callbackContext) {
-        this.callbackContext = callbackContext;
-    }
-
-    public void onReceive(Context ctx, Intent intent) {
-        System.out.println("IntentPlugin::onReceive");
-        if (intent.getAction().equals("cl.proindar.mobile.ACTION_DECODE_DATA")) {
-            
-            System.out.println("IntentPlugin::cl.proindar.mobile.ACTION_DECODE_DATA");
-            String strBarcode = intent.getExtras().getString("barcode_string");
-            System.out.println("IntentPlugin::barcode_string::"+strBarcode);
-
-            callbackContext.success(strBarcode);
-        }
-    } 
-} 

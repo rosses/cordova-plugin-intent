@@ -31,15 +31,16 @@
         </js-module>
 
         <source-file src="src/android/IntentPlugin.java" target-dir="src/com/napolitano/cordova/plugin/intent" />
+        <source-file src="src/android/BarcodeReceiverProindar.java" target-dir="src/com/napolitano/cordova/plugin/intent" />
+
         <config-file target="AndroidManifest.xml" parent="/manifest/application/activity">
             <intent-filter>
                 <action android:name="cl.proindar.mobile.ACTION_DECODE_DATA" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-            <receiver android:name="com.napolitano.cordova.plugin.intent">
+            <receiver android:name="BarcodeReceiverProindar">
                 <intent-filter>
-                    <action android:name="cl.proindar.mobile.ACTION_DECODE_DATA" />
-                    <category android:name="android.intent.category.DEFAULT" />
+                    <action android:name="cl.proindar.mobile.ACTION_DECODE_DATA" /> 
                 </intent-filter>
             </receiver>
         </config-file>
