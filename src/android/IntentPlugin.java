@@ -82,9 +82,12 @@ public class IntentPlugin extends CordovaPlugin {
         @Override
         public void onReceive(Context context, Intent intent) {
             JSONObject intentJSON = new JSONObject();
+            System.out.println("IntentPlugin::onReceive");
+            System.out.println("IntentPlugin::barcode_string::"+intent.getStringExtra("barcode_string"));
             intentJSON.put("received", "OK");
             intentJSON.put("barcode", intent.getStringExtra("barcode_string"));
-            this.cordova.getActivity().getApplicationContext().sendPluginResult(new PluginResult(PluginResult.Status.OK, intentJSON));
+            
+            super.webView.getContext().sendPluginResult(new PluginResult(PluginResult.Status.OK, intentJSON));
         }
     };
 
