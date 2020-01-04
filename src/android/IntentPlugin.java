@@ -81,7 +81,7 @@ public class IntentPlugin extends CordovaPlugin {
     public BroadcastReceiver broadcastReceiver_hook = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            intentJSON = new JSONObject();
+            JSONObject intentJSON = new JSONObject();
             intentJSON.put("received", "OK");
             intentJSON.put("barcode", intent.getStringExtra("barcode_string"));
             context.sendPluginResult(new PluginResult(PluginResult.Status.OK, intentJSON));
