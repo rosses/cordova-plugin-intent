@@ -35,7 +35,7 @@ public class IntentPlugin extends CordovaPlugin {
     private CallbackContext onNewIntentCallbackContext = null;
     private BroadcastReceiver mReceiver = null;
     private Intent intentService = new Intent("cl.proindar.mobile.ACTION_DECODE_DATA");
-
+    private String strBarcode = "";
     /**
      * Generic plugin command executor
      *
@@ -59,7 +59,7 @@ public class IntentPlugin extends CordovaPlugin {
             ex.printStackTrace();
         }
         
-        mReceiver = new BarcodeReceiver(callbackContext);
+        mReceiver = new BarcodeReceiverProindar(callbackContext);
 
         cordova.getActivity().startService(intentService);
         cordova.getActivity().registerReceiver(mReceiver); 
@@ -263,11 +263,11 @@ public class IntentPlugin extends CordovaPlugin {
         }
     }
 }
-public class BarcodeReceiver extends BroadcastReceiver {
+public class BarcodeReceiverProindar extends BroadcastReceiver {
 
     private CallbackContext callbackContext;
 
-    public BarcodeReceiver (CallbackContext callbackContext) {
+    public BarcodeReceiverProindar (CallbackContext callbackContext) {
         this.callbackContext = callbackContext;
     }
 
