@@ -13,11 +13,13 @@ import android.provider.MediaStore;
 import android.database.Cursor;
 import android.content.ClipData;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.net.Uri;
 
+import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.webkit.MimeTypeMap;
