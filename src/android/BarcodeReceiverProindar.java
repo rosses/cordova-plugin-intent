@@ -44,7 +44,7 @@ public class BarcodeReceiverProindar extends BroadcastReceiver {
             String strBarcode = intent.getExtras().getString("barcode_string");
             System.out.println("IntentPlugin::barcode_string::"+strBarcode);
 
-            JSONObject intentJSON = null;
+            JSONObject intentJSON = new JSONObject();
             intentJSON.put("scanner", true);
             intentJSON.put("barcode", strBarcode);
 
