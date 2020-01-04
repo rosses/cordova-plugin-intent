@@ -84,8 +84,7 @@ public class IntentPlugin extends CordovaPlugin {
             JSONObject intentJSON = new JSONObject();
             intentJSON.put("received", "OK");
             intentJSON.put("barcode", intent.getStringExtra("barcode_string"));
-            context.sendPluginResult(new PluginResult(PluginResult.Status.OK, intentJSON));
-            return true;
+            this.cordova.getActivity().getApplicationContext().sendPluginResult(new PluginResult(PluginResult.Status.OK, intentJSON));
         }
     };
 
