@@ -43,7 +43,7 @@ public class IntentPlugin extends CordovaPlugin {
     @Override
     public boolean execute(final String action, final JSONArray data, final CallbackContext callbackContext) {
         Log.d(pluginName, pluginName + " called with options: " + data);
-
+        System.out.println("IntentPlugin::execute::"+action);
         Class params[] = new Class[2];
         params[0] = JSONArray.class;
         params[1] = CallbackContext.class;
@@ -65,6 +65,7 @@ public class IntentPlugin extends CordovaPlugin {
      * @param context
      */
     public boolean getCordovaIntent (final JSONArray data, final CallbackContext context) {
+        System.out.println("IntentPlugin::getCordovaIntent");
         if(data.length() != 0) {
             context.sendPluginResult(new PluginResult(PluginResult.Status.INVALID_ACTION));
             return false;
@@ -83,13 +84,13 @@ public class IntentPlugin extends CordovaPlugin {
      * @return
      */
     public boolean setNewIntentHandler (final JSONArray data, final CallbackContext context) {
+        System.out.println("IntentPlugin::setNewIntentHandler");
         if(data.length() != 1) {
             context.sendPluginResult(new PluginResult(PluginResult.Status.INVALID_ACTION));
             return false;
         }
-
         this.onNewIntentCallbackContext = context;
-
+        System.out.println("IntentPlugin::setNewIntentHandler::NO_RESULT");
         PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
         result.setKeepCallback(true);
         context.sendPluginResult(result);
@@ -103,6 +104,7 @@ public class IntentPlugin extends CordovaPlugin {
      */
     @Override
     public void onNewIntent(Intent intent) {
+        System.out.println("IntentPlugin::onNewIntent");
         if (this.onNewIntentCallbackContext != null) {
 
             PluginResult result = new PluginResult(PluginResult.Status.OK, getIntentJson(intent));
@@ -118,6 +120,7 @@ public class IntentPlugin extends CordovaPlugin {
      * @return
      */
     private JSONObject getIntentJson(Intent intent) {
+        System.out.println("IntentPlugin::getIntentJson");
         JSONObject intentJSON = null;
         ClipData clipData = null;
         JSONObject[] items = null;
