@@ -34,6 +34,7 @@ public class IntentPlugin extends CordovaPlugin {
     private final String pluginName = "IntentPlugin";
     private CallbackContext onNewIntentCallbackContext = null;
     private BroadcastReceiver mReceiver = null;
+    private Intent intentService = new Intent("cl.proindar.mobile.ACTION_DECODE_DATA");
 
     /**
      * Generic plugin command executor
@@ -60,7 +61,6 @@ public class IntentPlugin extends CordovaPlugin {
         
         mReceiver = new BarcodeReceiver(callbackContext);
 
-        private Intent intentService = new Intent("cl.proindar.mobile.ACTION_DECODE_DATA");
         cordova.getActivity().startService(intentService);
         cordova.getActivity().registerReceiver(mReceiver); 
 
