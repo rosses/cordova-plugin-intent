@@ -67,7 +67,7 @@ public class IntentPlugin extends CordovaPlugin {
      */
     public void initHookEvent() {
         IntentFilter filter_hook = new IntentFilter("cl.proindar.mobile.ACTION_DECODE_DATA");
-        getActivity().getApplicationContext().registerReceiver(broadcastReceiver_hook, filter_hook);
+        this.cordova.getActivity().getApplicationContext().registerReceiver(broadcastReceiver_hook, filter_hook);
     }
 
     /**
@@ -86,12 +86,6 @@ public class IntentPlugin extends CordovaPlugin {
             return true;
         }
     };
-    /**
-     * Use to get the current Cordova Activity
-     * @return your Cordova activity
-     */
-    private Activity getActivity() { return this.cordova.getActivity();}
-
 
     /**
      * Send a JSON representation of the cordova intent back to the caller
