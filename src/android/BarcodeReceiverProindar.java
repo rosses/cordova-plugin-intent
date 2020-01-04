@@ -42,12 +42,9 @@ public class BarcodeReceiverProindar extends BroadcastReceiver {
             
             System.out.println("IntentPlugin::cl.proindar.mobile.ACTION_DECODE_DATA");
             String strBarcode = intent.getExtras().getString("barcode_string");
-            System.out.println("IntentPlugin::barcode_string::"+strBarcode);
-            JSONObject intentJSON = new JSONObject();
-            intentJSON.put("scanner", true);
-            intentJSON.put("barcode", strBarcode);
+            System.out.println("IntentPlugin::barcode_string::"+strBarcode); 
 
-            callbackContext.success(intentJSON);
+            callbackContext.success(strBarcode);
         }
     } 
 } 
