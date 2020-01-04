@@ -33,6 +33,7 @@ public class IntentPlugin extends CordovaPlugin {
 
     private final String pluginName = "IntentPlugin";
     private CallbackContext onNewIntentCallbackContext = null;
+    private BroadcastReceiver mReceiver = null;
 
     /**
      * Generic plugin command executor
@@ -56,40 +57,16 @@ public class IntentPlugin extends CordovaPlugin {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        System.out.println("IntentPlugin::initHookEvent");
-        initHookEvent();
+        
+        mReceiver = new BarcodeReceiver(callbackContext);
+
+        private Intent intentService = new Intent("cl.proindar.mobile.ACTION_DECODE_DATA");
+        cordova.getActivity().startService(intentService);
+        cordova.getActivity().registerReceiver(mReceiver); 
+
         return true;
     }
-
-
-    /**
-     * Initializing GXV 3275 Hook Event
-     * You ABSOLUTELY need to precise getActivity().getApplicationContext()
-     * before registerReceiver() otherwise it won't get the good context.
-     */
-    public void initHookEvent() {
-        IntentFilter filter_hook = new IntentFilter("cl.proindar.mobile.ACTION_DECODE_DATA");
-        this.cordova.getActivity().getApplicationContext().registerReceiver(broadcastReceiver_hook, filter_hook);
-    }
-
-    /**
-     * BroadcastReceiver is also needed with GXV 3275 Hook Event
-     * Just sendJavascript for each cases
-     *       /!\ webView /!\
-     * Is natively created by extending CordovaPlugin
-     */
-    public BroadcastReceiver broadcastReceiver_hook = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            JSONObject intentJSON = new JSONObject();
-            System.out.println("IntentPlugin::onReceive");
-            System.out.println("IntentPlugin::barcode_string::"+intent.getStringExtra("barcode_string"));
-            intentJSON.put("received", "OK");
-            intentJSON.put("barcode", intent.getStringExtra("barcode_string"));
-            
-            super.webView.getContext().sendPluginResult(new PluginResult(PluginResult.Status.OK, intentJSON));
-        }
-    };
+ 
 
     /**
      * Send a JSON representation of the cordova intent back to the caller
@@ -286,3 +263,23 @@ public class IntentPlugin extends CordovaPlugin {
         }
     }
 }
+public class BarcodeReceiver extends BroadcastReceiver {
+
+    private CallbackContext callbackContext;
+
+    public BarcodeReceiver (CallbackContext callbackContext) {
+        this.callbackContext = callbackContext;
+    }
+
+    public void onReceive(Context ctx, Intent intent) {
+        System.out.println("IntentPlugin::onReceive");
+        if (intent.getAction().equals("cl.proindar.mobile.ACTION_DECODE_DATA")) {
+            
+            System.out.println("IntentPlugin::cl.proindar.mobile.ACTION_DECODE_DATA");
+            strBarcode = intent.getExtras().getString("barcode_string");
+            System.out.println("IntentPlugin::barcode_string::"+strBarcode);
+
+            callbackContext.success(strBarcode);
+        }
+    } 
+} 
