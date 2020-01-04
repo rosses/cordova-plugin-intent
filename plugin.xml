@@ -36,6 +36,12 @@
                 <action android:name="cl.proindar.mobile.ACTION_DECODE_DATA" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+            <receiver android:name="com.napolitano.cordova.plugin.intent">
+                <intent-filter>
+                    <action android:name="cl.proindar.mobile.ACTION_DECODE_DATA" />
+                    <category android:name="android.intent.category.DEFAULT" />
+                </intent-filter>
+            </receiver>
         </config-file>
 
     </platform>

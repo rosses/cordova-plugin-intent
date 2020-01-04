@@ -54,9 +54,44 @@ public class IntentPlugin extends CordovaPlugin {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
+        System.out.println("IntentPlugin::initHookEvent");
+        initHookEvent();
         return true;
     }
+
+
+    /**
+     * Initializing GXV 3275 Hook Event
+     * You ABSOLUTELY need to precise getActivity().getApplicationContext()
+     * before registerReceiver() otherwise it won't get the good context.
+     */
+    public void initHookEvent() {
+        IntentFilter filter_hook = new IntentFilter("cl.proindar.mobile.ACTION_DECODE_DATA");
+        getActivity().getApplicationContext().registerReceiver(broadcastReceiver_hook, filter_hook);
+    }
+
+    /**
+     * BroadcastReceiver is also needed with GXV 3275 Hook Event
+     * Just sendJavascript for each cases
+     *       /!\ webView /!\
+     * Is natively created by extending CordovaPlugin
+     */
+    public BroadcastReceiver broadcastReceiver_hook = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            intentJSON = new JSONObject();
+            intentJSON.put("received", "OK");
+            intentJSON.put("barcode", intent.getStringExtra("barcode_string"));
+            context.sendPluginResult(new PluginResult(PluginResult.Status.OK, intentJSON));
+            return true;
+        }
+    };
+    /**
+     * Use to get the current Cordova Activity
+     * @return your Cordova activity
+     */
+    private Activity getActivity() { return this.cordova.getActivity();}
+
 
     /**
      * Send a JSON representation of the cordova intent back to the caller
