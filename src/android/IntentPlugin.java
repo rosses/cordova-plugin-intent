@@ -276,7 +276,7 @@ public class BarcodeReceiverProindar extends BroadcastReceiver {
         if (intent.getAction().equals("cl.proindar.mobile.ACTION_DECODE_DATA")) {
             
             System.out.println("IntentPlugin::cl.proindar.mobile.ACTION_DECODE_DATA");
-            strBarcode = intent.getExtras().getString("barcode_string");
+            String strBarcode = intent.getExtras().getString("barcode_string");
             System.out.println("IntentPlugin::barcode_string::"+strBarcode);
 
             callbackContext.success(strBarcode);
