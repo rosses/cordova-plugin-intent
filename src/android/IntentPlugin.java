@@ -60,7 +60,7 @@ public class IntentPlugin extends CordovaPlugin {
         
         mReceiver = new BarcodeReceiverProindar(callbackContext);
         //cordova.getActivity().startService(intentService);
-        IntentFilter filter1 = new IntentFilter("cl.proindar.mobile.ACTION_DECODE_DATA");
+        IntentFilter filter1 = new IntentFilter("com.symbol.datawedge.api.RESULT_ACTION");
         cordova.getActivity().registerReceiver(mReceiver, filter1); 
 
         return true;
