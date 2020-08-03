@@ -42,15 +42,17 @@ public class BarcodeReceiverProindar extends BroadcastReceiver {
         if (intent.getAction().equals("com.symbol.datawedge.api.RESULT_ACTION")) {
             
             System.out.println("IntentPlugin::com.symbol.datawedge.api.RESULT_ACTION");
-            String strBarcode = intent.getExtras().getString("barcode_string");
+            String strBarcode = intent.getExtras().getString("com.symbol.datawedge.data_string");
             System.out.println("IntentPlugin::barcode_string::"+strBarcode); 
 
+            /*
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
                 for (String key : bundle.keySet()) {
                     System.out.println("IntentArrigoni::"+key + " : " + (bundle.get(key) != null ? bundle.get(key) : "NULL"));
                 }
             }
+            */
             callbackContext.success(strBarcode);
         }
     } 
