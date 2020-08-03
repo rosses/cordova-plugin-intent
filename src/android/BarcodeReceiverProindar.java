@@ -44,6 +44,29 @@ public class BarcodeReceiverProindar extends BroadcastReceiver {
             String strBarcode = intent.getExtras().getString("barcode_string");
             System.out.println("IntentPlugin::barcode_string::"+strBarcode); 
 
+
+            String command = intent.getStringExtra("COMMAND");
+            String commandidentifier = intent.getStringExtra("COMMAND_IDENTIFIER");
+            String result = intent.getStringExtra("RESULT");
+
+            Bundle bundle = new Bundle();
+            String resultInfo = "";
+            if(intent.hasExtra("RESULT_INFO")){
+                bundle = intent.getBundleExtra("RESULT_INFO");
+                Set<String> keys = bundle.keySet();
+                for (String key: keys) {
+                    resultInfo += key + ": "+bundle.getString(key) + "\n";
+                }
+            }
+
+            String text = "Command: "+command+"\n" +
+                    "Result: " +result+"\n" +
+                    "Result Info: " +resultInfo + "\n" +
+                    "CID:"+commandidentifier;
+
+
+            System.out.println("string.text::"+text); 
+
             callbackContext.success(strBarcode);
         }
     } 
